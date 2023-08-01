@@ -1,0 +1,46 @@
+@charset "utf-8";
+
+@font-face {
+    font-family: "appleB";
+    src : url("./AppleSDGothicNeoB.ttf");
+}
+
+@font-face {
+    font-family: "appleEB";
+    src: url("./AppleSDGothicNeoEB.ttf");
+}
+
+@font-face {
+    font-family: "appleH";
+    src: url("./AppleSDGothicNeoH.ttf");
+}
+
+@font-face {
+    font-family: "appleL";
+    src: url("./AppleSDGothicNeoL.ttf");
+}
+
+@font-face {
+    font-family: "appleM";
+    src: url("./AppleSDGothicNeoM.ttf");
+}
+
+@font-face {
+    font-family: "appleR";
+    src: url("./AppleSDGothicNeoR.ttf");
+}
+
+@font-face {
+    font-family: "appleSB";
+    src: url("./AppleSDGothicNeoSB.ttf");
+}
+
+@font-face {
+    font-family: "appleT";
+    src: url("./AppleSDGothicNeoSB.ttf");
+}
+
+@font-face {
+    font-family: "appleUL";
+    src: url("./AppleSDGothicNeoUL.ttf");
+}
