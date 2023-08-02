@@ -4,6 +4,8 @@ import { Box } from '@mui/system'
 import { styled } from 'styled-components'
 import { useSelector } from 'react-redux'
 import { RootState } from '../states/store/store'
+import ShuffleButtonComponent from './shuffleButtonComponent'
+import Counting from './counting'
 
 //css
 const ShuffleBox = styled(Box)({
@@ -21,7 +23,6 @@ export const ShuffleComponent = () => {
   
   useEffect(()=>{
  
-
   })
 
   const transFormWord = (number : Number)=>{
@@ -41,6 +42,8 @@ export const ShuffleComponent = () => {
     <ShuffleBox>
       <ShuffleCBox>
       {transFormWord(changeTabNum.number)} 페이지
+      <ShuffleButtonComponent />
+      <Counting />
       </ShuffleCBox>
     </ShuffleBox>
   )
