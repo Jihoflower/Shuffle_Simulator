@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { styled } from 'styled-components';
 import { RootState } from '../states/store/store';
 import {SplitButtonComponent} from './SplitButtonComponent';
+import { sufChangeOption } from '../states/store/sufOptionSlice';
 
 
 
@@ -50,9 +51,9 @@ const changeOption = useSelector((state :RootState)=>state.changeOption);
         <CardMedia2 >
             <img src={`${process.env.PUBLIC_URL}/media/`+`${changeImage}`}/>
             <Options>
-                {changeOption.options.opt1}<br/>
-                {changeOption.options.opt2}<br/>
-                {changeOption.options.opt3}
+                {changeOption.options.opt1} +15<br/>
+                {changeOption.options.opt2} +15<br/>
+                {changeOption.options.opt3} +15
                 {/* <SplitButtonComponent flag={false}/>
                 <SplitButtonComponent flag={false}/>
                 <SplitButtonComponent flag={false}/> */}
