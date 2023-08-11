@@ -5,6 +5,8 @@ import { ShuffleComponent } from '../contents/ShuffleComponent';
 
 // css 
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import { RootState } from '../states/store/store';
 
 const MainBack = styled(Box)({
   display : 'flex',
@@ -47,9 +49,11 @@ const MainText = styled(Typography)({
 
 
 export const Main = () =>{
+
   return (
     <MainBack>
       <MainGrid>
+        
         <ShuffleComponent/>
         
       </MainGrid>

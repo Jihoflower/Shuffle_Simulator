@@ -30,6 +30,10 @@ export const changeSlice = createSlice({
         // 타입을 지정해주는데 객체 타입으로 타입을 지정해줌
         sufChangeOption : (state , action: PayloadAction<{opt1 : string, opt2 : string , opt3 : string }>) =>{
             state.options = action.payload;
+        },
+
+        sufChangeOptionInit : (state) =>{
+            state.options = initialState.options;
         }
     }
     
@@ -37,6 +41,6 @@ export const changeSlice = createSlice({
 })
 
 
-export const {sufChangeOption} = changeSlice.actions ; // 리듀서를 export
+export const {sufChangeOption , sufChangeOptionInit} = changeSlice.actions ; // 리듀서를 export
 export default changeSlice.reducer;
 

@@ -16,9 +16,9 @@ export interface optionState{
 // 이니셜라이징 할때 기본값
 const initialState :optionState = {
     options:{
-        opt1 : "3점슛 성공률 상승 +15",
-        opt2 : "미들슛 성공률 상승 +15",
-        opt3 : "덩크슛 성공률 상승 +15"
+        opt1 : "3점슛성공률상승",
+        opt2 : "미들슛성공률상승",
+        opt3 : "덩크슛성공률상승"
     }
 };
 
@@ -30,13 +30,21 @@ export const changeSlice = createSlice({
         // 타입을 지정해주는데 객체 타입으로 타입을 지정해줌
         changeOption : (state , action: PayloadAction<{opt1 : string, opt2 : string , opt3 : string }>) =>{
             state.options = action.payload;
-        }
+        },
+
+        changeOptionLock : (state , action: PayloadAction<{opt1 : string, opt2 : string , opt3 : string }>) =>{
+            state.options = action.payload;
+        },
+
+        changeOptionInit  : (state) =>{
+            state.options = initialState.options;
+        },
     }
     
 
 })
 
 
-export const {changeOption} = changeSlice.actions ; // 리듀서를 export
+export const {changeOption , changeOptionInit , changeOptionLock} = changeSlice.actions ; // 리듀서를 export
 export default changeSlice.reducer;
 

@@ -1,4 +1,4 @@
-import { Card, CardContent, CardMedia, Typography } from '@mui/material'
+import { Card, CardContent, CardMedia, Checkbox, ClickAwayListenerProps, FormControlLabel, SelectChangeEvent, Typography } from '@mui/material'
 import zIndex from '@mui/material/styles/zIndex';
 import React from 'react'
 import { useSelector } from 'react-redux';
@@ -6,6 +6,10 @@ import { styled } from 'styled-components';
 import { RootState } from '../states/store/store';
 import {SplitButtonComponent} from './SplitButtonComponent';
 import { sufChangeOption } from '../states/store/sufOptionSlice';
+import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import { Box, style, width } from '@mui/system';
+import { hover } from '@testing-library/user-event/dist/hover';
+import { ClassNames } from '@emotion/react';
 
 
 
@@ -46,18 +50,28 @@ export const SufCardComponent = () => {
 const changeImage = useSelector((state :RootState)=>state.changeImage);
 const changeOption = useSelector((state :RootState)=>state.changeOption);
 
+//임시 잠금
+const lockOption = ()=>{
+   
+}
+
   return (
     <CardMain>
         <CardMedia2 >
             <img src={`${process.env.PUBLIC_URL}/media/`+`${changeImage}`}/>
-            <Options>
-                {changeOption.options.opt1} +15<br/>
-                {changeOption.options.opt2} +15<br/>
-                {changeOption.options.opt3} +15
-                {/* <SplitButtonComponent flag={false}/>
-                <SplitButtonComponent flag={false}/>
-                <SplitButtonComponent flag={false}/> */}
+            
+            <Options >
+                <Box className = 'opt1'>
+                    {changeOption.options.opt1} +15 
+                </Box>
+                <Box className='opt2'>
+                    {changeOption.options.opt2} +15 
+                </Box>
+                <Box className='op3'>
+                    {changeOption.options.opt3} +15 
+                </Box>
             </Options>
+            
         </CardMedia2>
     </CardMain>
   )

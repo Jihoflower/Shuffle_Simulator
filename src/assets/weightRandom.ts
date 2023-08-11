@@ -12,36 +12,84 @@ ex ) Math.random = 37 이면
 */
 
 import { keys } from '@mui/system';
-import {optionsList} from '../assets/tempDb'
 
 
-const tempDb = optionsList
-export const gatCha =(tempDb : object)=>{
 
-    // 선택 값 설정하기
-    
-    
+
+
+export const gatCha =(tempDb : object , menuIndex : number , lockFlag : boolean)=>{
+
+    // 선택 값 설정하기   
     let count = 0;
     let acc = 0;
-    let newTemp = [];
+    let newTemp: Object[] = [];
+    let weightFlag = true; 
 
-    while(count < 3){
-    // 객체 안에 있는 가중치 값 가져오기
-    let pointNum = Math.random() *100;
-    console.log(pointNum);
-
-        for(let value of Object.values(tempDb) ){
-            acc += value.percent
-            if(pointNum <= acc){
-                newTemp.push(value);
-                acc = 0;
-                break;
-            }
-        }
-        
-        console.log(count);
-        count++;
+    //잠금 Flag / true - 사용 false - 미사용
+    if(lockFlag == true){
+        randdomShuffleLock(count , acc , tempDb , newTemp , weightFlag);
+    }
+    else{
+        randomShuffle(count , acc , tempDb , newTemp);
     }
     
     return newTemp;
+}
+
+const randomShuffle =(count : number ,acc : number, tempDb :Object , newTemp : Array<Object>)=>{
+    while(count < 3){
+        // 객체 안에 있는 가중치 값 가져오기
+        let pointNum = Math.random() *100;
+        console.log(pointNum);  
+            for(let value of Object.values(tempDb)){
+                acc += value.percent
+                if(pointNum <= acc){
+                    
+                    newTemp.push(value);
+                    acc = 0;
+                    break;
+                }
+            }               
+            count++;
+            
+        }
+        console.log("??? : "+newTemp);
+    return newTemp;
+}
+
+
+const randdomShuffleLock =(count : number ,acc : number, tempDb :Object , newTemp : Array<Object> , weightFlag : boolean)=>{
+    while(count < 2){
+        // 객체 안에 있는 가중치 값 가져오기
+        let pointNum = Math.random() *100;
+            for(let value of Object.values(tempDb) ){
+                if(weightFlag == true){
+                    let percentTemp = 0;
+                    if(value.name !== "3점슛성공률상승"){
+                        percentTemp = (value.percent + (3.2*0.8/28)) ;
+                        acc += percentTemp
+                    }
+                    else if(value.name === "3점슛성공률상승"){
+                        percentTemp = (value.percent*0.2) ;
+                        acc += (value.percent*0.2) ;
+                    }
+                    if(pointNum <= acc || acc > 100){
+                        newTemp.push(value);
+                        acc = 0;
+                        break;
+                    }
+                }
+                else if(weightFlag == false){
+                    acc += value.percent;
+                    if(pointNum <= acc){
+                        newTemp.push(value);
+                        acc = 0;
+                        break;
+                    }
+                }
+        }  
+            weightFlag = false;
+            console.log(count);
+            count++;
+        }
 }

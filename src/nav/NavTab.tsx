@@ -21,7 +21,7 @@ export const NavTab =()=> {
     const changeTabNum = useSelector((state :RootState)=>state.changeTab);
 
     useEffect(()=>{
-      console.log(changeTabNum);
+      
     },[useSelector((state :RootState)=>state.changeTab).number])
 
     const dispatch = useDispatch();
@@ -37,7 +37,7 @@ export const NavTab =()=> {
       <ContentTabBox value={changeTabNum.number} onChange={handleChange}>
         <ContentTab label= "일반 셔플" value={0}/>
         <ContentTab label= "프리미엄 셔플" value={1}/>
-        <ContentTab label= "이벤트 프셔" value={2} />
+        <ContentTab label= "셔플 관련 이벤트" value={2} />
       </ContentTabBox> 
 
 

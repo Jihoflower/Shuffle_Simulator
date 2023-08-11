@@ -2,8 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import changeTab from "./changeTabSlice";
 import  changeImage  from "./imageSlice";
 import  changeOption  from "./optionSlice";
-import clickCount  from "./clickCountSlice";
+import  increaseCount   from "./clickCountSlice";
+import  initialCount   from "./clickCountSlice";
 import  sufChangeOption  from "./sufOptionSlice";
+import changeOptionValue    from "./cardOptionSlice";
+import changeOptionInitValue    from "./cardOptionSlice";
 
  
 
@@ -14,8 +17,11 @@ export const store = configureStore({
         changeTab:changeTab,
         changeImage:changeImage,
         changeOption:changeOption,
-        clickCount:clickCount,
+        increaseCount:increaseCount,
+        initialCount : initialCount,
         sufchangeOption:sufChangeOption,
+        changeOptionValue : changeOptionValue,
+        changeOptionInitValue : changeOptionInitValue,
     }
 });
 
