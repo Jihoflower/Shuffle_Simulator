@@ -5,18 +5,19 @@ import { styled } from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../states/store/store'
 import { PreCardComponent } from './PreCardComponent'
-import { SufCardComponent } from './SufCardComponent'
 import { Button } from '@mui/material'
 
-import  {changeOption, changeOptionInit}  from '../states/store/optionSlice';
+import  {optionActions,optionSelector}  from '../states/store/optionSlice';
 import '../assets/tempDb';
 import { gatCha } from '../assets/weightRandom'
 import { TNOptions,TPOptions,TBOptions, ANOptions, DNOptions, APOptions ,ABOptions , DPOptions , DBOptions } from '../assets/tempDb'
-import { increaseCount , initialCount } from '../states/store/clickCountSlice'
-import { sufChangeOption, sufChangeOptionInit } from '../states/store/sufOptionSlice'
+import { clickActions } from '../states/store/clickCountSlice'
+import {sufChangeActions} from '../states/store/sufOptionSlice'
 import { red } from '@mui/material/colors'
-import { changeOptionInitValue, changeOptionValue } from '../states/store/cardOptionSlice'
+import { cardOptionActions } from '../states/store/cardOptionSlice'
 import { ComboComponent } from './ComboComponent'
+import { SufCardComponent } from './SufCardComponent'
+import { createSelector } from '@reduxjs/toolkit'
 
 
 
@@ -56,8 +57,12 @@ const P = styled('span')({
 let DB_OPTION : Object[] = [];
 
 export const ShuffleComponent = () => {
+  // dispatch 가 두번 호출 되는 이유 useSelector는 렌더링을 발생시킴 / createSelector로 바꾸어야함
 
+  
   const OPTION_STATE = useSelector((state :RootState)=>state.changeOption).options; // 옵션 상태
+  const OPTION_STATE2 = optionSelector;
+  console.log(OPTION_STATE2);
   const CLICK_COUNT = useSelector((state :RootState)=>state.increaseCount).number;  // 사용 횟수
   const MENU_INDEX = useSelector((state :RootState)=>state.changeTab).number;       // 메뉴 인덱스
   const CARD_OPTION_VALUE = useSelector((state :RootState)=>state.changeOptionValue).optionValue; // 공/수/재 구분
@@ -72,8 +77,8 @@ export const ShuffleComponent = () => {
     console.log("useEffect On")
     windowSetting(MENU_INDEX);
     optionValueSetting(CARD_OPTION_VALUE,MENU_INDEX);
-    dispatch(changeOptionInit()); // 우측 초기화
-    dispatch(sufChangeOptionInit()); // 좌측 초기화
+    dispatch(optionActions.changeOptionInit()); // 우측 초기화
+    dispatch(sufChangeActions.sufChangeOptionInit()); // 좌측 초기화
     console.log(SHUFFLE_NAME+"|"+SHUFFLE_PRICE);
   },[MENU_INDEX , CARD_OPTION_VALUE])
 
@@ -82,7 +87,7 @@ export const ShuffleComponent = () => {
     //   alert("동일 옵션 두줄");
 
     // }
-    if(OPTION_STATE.opt1 == OPTION_STATE.opt2 && OPTION_STATE.opt2 == OPTION_STATE.opt3){
+    if(OPTION_STATE[0].opt == OPTION_STATE[1].opt && OPTION_STATE[1].opt == OPTION_STATE[2].opt){
       alert("동일 옵션 세줄");
     }
 
@@ -91,48 +96,54 @@ export const ShuffleComponent = () => {
 
   const handleClick=()=>{
     console.log("handleClick on");
+    //temp("a","b","c",{a:"d"});
     if(!changFlag()){
       return false;
     }
     const PRE_OPTION_STATE = OPTION_STATE;
-    console.log("DB_OPTION : "+DB_OPTION[0]);
     changeData(gatCha(DB_OPTION , MENU_INDEX , LOCK_FLAG));
-    dispatch(sufChangeOption(PRE_OPTION_STATE))
-    dispatch(increaseCount());
+    dispatch(sufChangeActions.sufChangeOption(PRE_OPTION_STATE))
+    dispatch(clickActions.increaseCount());
 
 
       
   }
+  const temp =(...args: any[])=>{
+    console.log(args);
+    for(let i = 0 ; i < args.length ; i++){
+      console.log(args[i]);
+    }
+  }
 
   const changeData =(newTemp : object)=>{
-    let tempOptions ={
-      opt1 : "" as string,
-      opt2 : "" as string,
-      opt3 : "" as string
-    }
 
-    console.log(newTemp);
+    let preTempOptions = [
+      {opt : OPTION_STATE[0].opt as string , flag : OPTION_STATE[0].flag as boolean}, 
+      {opt : OPTION_STATE[1].opt as string , flag : OPTION_STATE[1].flag as boolean}, 
+      {opt : OPTION_STATE[2].opt as string , flag : OPTION_STATE[2].flag as boolean}, 
+    ]
+    let tempOptions = [...preTempOptions];
 
     if(false){
-      for(let i = 0 ; i < 3 ; i++){
-          tempOptions.opt1 = OPTION_STATE.opt1;
-          tempOptions.opt2 = Object.values(newTemp)[0].name;
-          tempOptions.opt3 = Object.values(newTemp)[1].name;
-      }
+      // for(let i = 0 ; i < 3 ; i++){
+      //     tempOptions.opt1 = OPTION_STATE.opt1;
+      //     tempOptions.opt2 = Object.values(newTemp)[0].name;
+      //     tempOptions.opt3 = Object.values(newTemp)[1].name;
+      // }
     }
     else if(true){
-        tempOptions.opt1 = Object.values(newTemp)[0].name;
-        tempOptions.opt2 = Object.values(newTemp)[1].name;
-        tempOptions.opt3 = Object.values(newTemp)[2].name;
+        tempOptions[0].opt = Object.values(newTemp)[0].name;
+        tempOptions[1].opt = Object.values(newTemp)[1].name;
+        tempOptions[2].opt = Object.values(newTemp)[2].name;
     }
-    dispatch(changeOption(tempOptions));
+    dispatch(optionActions.changeOption(tempOptions));
     
   }
 
   //메뉴 인덱스에 따른 세팅
   const windowSetting = (tabIndex : number) =>{
     // 클릭카운트 초기화
-    dispatch(initialCount());
+    dispatch(clickActions.initialCount());
     // 가격 기준 초기화
     if(tabIndex === 0){
       SHUFFLE_PRICE = 600;
@@ -189,22 +200,10 @@ export const ShuffleComponent = () => {
     }
   }
 
-  // const cardOptionValueSetting = ()=>{
-  //   dispatch(changeOptionValue())
-  // switch (cardOptionValue){
-  //   case "A":
-  //     break;
-  //   case "B":
-  //     break;
-  //   case "T":
-
-  //     break;
-  // }
-  // }
-
   
 
   return (
+    
     <ShuffleBox>
       <div>
       <P> {SHUFFLE_NAME} </P>

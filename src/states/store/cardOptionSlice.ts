@@ -21,9 +21,11 @@ export const changeSlice = createSlice({
         // 리듀서 목록 파라미터에 state 와 action 을 받음
         // 타입을 지정해주는데 객체 타입으로 타입을 지정해줌
         changeOptionValue : (state , action: PayloadAction<string>) =>{
+            console.log("changeOptionValue");
             state.optionValue = action.payload;
         },
         changeOptionInitValue  : (state) =>{
+            console.log("changeOptionInitValue");
             state.optionValue = initialState.optionValue;
         },
     }
@@ -32,6 +34,6 @@ export const changeSlice = createSlice({
 })
 
 
-export const {changeOptionValue , changeOptionInitValue } = changeSlice.actions ; // 리듀서를 export
+export const  cardOptionActions = changeSlice.actions ; // 리듀서를 export
 export default changeSlice.reducer;
 

@@ -1,15 +1,18 @@
 import { Card, CardContent, CardMedia, Checkbox, ClickAwayListenerProps, FormControlLabel, SelectChangeEvent, Typography } from '@mui/material'
 import zIndex from '@mui/material/styles/zIndex';
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { styled } from 'styled-components';
 import { RootState } from '../states/store/store';
 import {SplitButtonComponent} from './SplitButtonComponent';
-import { sufChangeOption } from '../states/store/sufOptionSlice';
+import { sufChangeActions } from '../states/store/sufOptionSlice';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { Box, style, width } from '@mui/system';
 import { hover } from '@testing-library/user-event/dist/hover';
 import { ClassNames } from '@emotion/react';
+import { CustomElement } from 'react-hook-form';
+import {optionActions}  from '../states/store/optionSlice';
+
 
 
 
@@ -44,32 +47,67 @@ const Options = styled(CardContent)({
 
 })
 
+const IsSelectBox = styled(Box)({
+    backgroundColor : 'red'
+})
+
+const SelectBox = styled(Box)({
+    backgroundColor : 'green'
+})
+
+
+
 
 
 export const SufCardComponent = () => {
 const changeImage = useSelector((state :RootState)=>state.changeImage);
 const changeOption = useSelector((state :RootState)=>state.changeOption);
+const changeColor = useSelector((state :RootState)=>state.changeColor);
+const dispatch = useDispatch();
 
 //임시 잠금
-const lockOption = ()=>{
-   
+const lockOption = (index : number , opt : string)=>{
+    switch (index){
+        case 1:
+            console.log(1);
+            dispatch(optionActions.changeOptionLock(opt));
+            break;
+
+        case 2:
+            console.log(2);
+
+            break;
+
+        case 3:
+            console.log(3);
+
+            break;
+
+        default:
+            break;
+    }
+
+    
+    
 }
+
+
 
   return (
     <CardMain>
         <CardMedia2 >
             <img src={`${process.env.PUBLIC_URL}/media/`+`${changeImage}`}/>
             
-            <Options >
-                <Box className = 'opt1'>
-                    {changeOption.options.opt1} +15 
-                </Box>
-                <Box className='opt2'>
-                    {changeOption.options.opt2} +15 
-                </Box>
-                <Box className='op3'>
-                    {changeOption.options.opt3} +15 
-                </Box>
+            <Options > 
+                <SelectBox  onClick={()=>lockOption(1,changeOption.options[0].opt)}> {/*함수를 바로 호출하지말고 콜백으로 처리해야함*/}
+                    {changeOption.options[0].opt} +15 {}
+                </SelectBox>
+                <SelectBox className='opt1' onClick={()=>lockOption(2,changeOption.options[1].opt)}>
+                    {changeOption.options[1].opt} +15 
+                </SelectBox>
+                <SelectBox className='opt1' onClick={()=>lockOption(3,changeOption.options[2].opt)}>
+                    {changeOption.options[2].opt} +15 
+                </SelectBox>
             </Options>
             
         </CardMedia2>

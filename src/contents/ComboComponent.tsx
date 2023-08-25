@@ -3,7 +3,7 @@ import { fontFamily } from '@mui/system'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../states/store/store'
-import { changeOptionValue } from '../states/store/cardOptionSlice'
+import { cardOptionActions } from '../states/store/cardOptionSlice'
 
 const cardOptionValue = [
     {label : "공격" , value : "A"},
@@ -16,7 +16,7 @@ export const ComboComponent = () => {
     const dispatch = useDispatch();
 
     const handleChange = (e : SelectChangeEvent)=>{
-        dispatch(changeOptionValue(e.target.value));
+        dispatch(cardOptionActions.changeOptionValue(e.target.value));
     }
     
   return (

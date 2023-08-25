@@ -6,7 +6,7 @@ import { styled } from 'styled-components';
 import { RootState } from '../states/store/store';
 import {SplitButtonComponent} from './SplitButtonComponent';
 import { Box } from '@mui/system';
-import { sufChangeOption } from '../states/store/sufOptionSlice';
+import { sufChangeActions } from '../states/store/sufOptionSlice';
 
 
 
@@ -52,7 +52,9 @@ const Options = styled(CardContent)({
 
 export const PreCardComponent = () => {
 const changeImage = useSelector((state :RootState)=>state.changeImage);
-const sufChangeOption = useSelector((state :RootState)=>state.sufchangeOption);
+const preChangeOption = useSelector((state :RootState)=>state.sufChangeOption);
+
+
 
   return (
     <CardMain>
@@ -63,9 +65,9 @@ const sufChangeOption = useSelector((state :RootState)=>state.sufchangeOption);
                 <SplitButtonComponent/>
                 <SplitButtonComponent/>
                 <Box >
-                {sufChangeOption.options.opt1} +15<br/>
-                {sufChangeOption.options.opt2} +15<br/>
-                {sufChangeOption.options.opt3} +15
+                {preChangeOption.options[0].opt} +15<br/>
+                {preChangeOption.options[1].opt} +15<br/>
+                {preChangeOption.options[2].opt} +15
                 </Box>
             </Options>
         </CardMedia2>

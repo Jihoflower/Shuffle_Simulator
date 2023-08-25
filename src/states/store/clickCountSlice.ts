@@ -15,9 +15,11 @@ export const changeSlice = createSlice({
     reducers:{
         // 리듀서 목록 파라미터에 state 와 action 을 받음
         increaseCount : (state) =>{
+            console.log("increaseCount");
             state.number = state.number+1;
         },
         initialCount : (state) =>{
+            console.log("initialCount");
             state.number = 0;
         }
     }
@@ -26,6 +28,6 @@ export const changeSlice = createSlice({
 })
 
 
-export const {increaseCount , initialCount} = changeSlice.actions ; // 리듀서를 export
+export const clickActions = changeSlice.actions ; // 리듀서를 export
 export default changeSlice.reducer;
 

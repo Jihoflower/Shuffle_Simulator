@@ -15,6 +15,7 @@ export const changeSlice = createSlice({
     reducers:{
         // 리듀서 목록 파라미터에 state 와 action 을 받음
         changeTab : (state , action: PayloadAction<number>) =>{
+            console.log("changeTab");
             state.number = action.payload
         }
     }
@@ -23,6 +24,6 @@ export const changeSlice = createSlice({
 })
 
 
-export const {changeTab} = changeSlice.actions ; // 리듀서를 export
+export const changeTabActions = changeSlice.actions ; // 리듀서를 export
 export default changeSlice.reducer;
 

@@ -40,7 +40,6 @@ const randomShuffle =(count : number ,acc : number, tempDb :Object , newTemp : A
     while(count < 3){
         // 객체 안에 있는 가중치 값 가져오기
         let pointNum = Math.random() *100;
-        console.log(pointNum);  
             for(let value of Object.values(tempDb)){
                 acc += value.percent
                 if(pointNum <= acc){
@@ -53,7 +52,6 @@ const randomShuffle =(count : number ,acc : number, tempDb :Object , newTemp : A
             count++;
             
         }
-        console.log("??? : "+newTemp);
     return newTemp;
 }
 

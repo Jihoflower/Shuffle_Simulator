@@ -5,8 +5,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { fontFamily } from '@mui/system';
 import { SyntheticEvent } from 'react';
-import { changeTab } from '../states/store/changeTabSlice';
-import { changeOption } from '../states/store/optionSlice';
+import { changeTabActions } from '../states/store/changeTabSlice';
+import { optionActions } from '../states/store/optionSlice';
 
 
 
