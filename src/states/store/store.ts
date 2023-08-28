@@ -33,7 +33,8 @@ export const store = configureStore({
         changeColor : changeColor,
         changeColorInit : changeColorInit,
         changeOptionLock : changeOptionLock,
-    }
+    },
+    devTools: process.env.NODE_ENV !== 'production',
 
  
 

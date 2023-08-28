@@ -1,13 +1,13 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSelector, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import { RootState } from './store';
 
-export interface ChangeState{
+export interface ClickState{
     number : number
 }
 
 // 이니셜라이징 할때 기본값
-const initialState :ChangeState = {number : 0};
+const initialState :ClickState = {number : 0};
 
 export const changeSlice = createSlice({
     name : "clickCount", //createSlice의 이름
@@ -26,6 +26,14 @@ export const changeSlice = createSlice({
     
 
 })
+
+// 값이 있으면 사용하고 , 없으면 초기값을 가져다 사용
+const _clickCount = (state:RootState)=>state.increaseCount.number || initialState.number; 
+
+export const clickCountSelector = createSelector(
+    [_clickCount],
+    (number,)=>{return number }
+)
 
 
 export const clickActions = changeSlice.actions ; // 리듀서를 export

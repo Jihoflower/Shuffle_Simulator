@@ -1,7 +1,7 @@
 import React, { SyntheticEvent, useEffect, useState } from 'react'
 import { Tab, TableContainer, Tabs  } from '@mui/material';
 import { useDispatch , useSelector } from 'react-redux';
-import  {changeTabActions}  from '../states/store/changeTabSlice';
+import  {changeTabActions, tabIndexSelector}  from '../states/store/changeTabSlice';
 
 
 //css
@@ -18,11 +18,11 @@ const ContentTab = styled(Tab)({
 })
 
 export const NavTab =()=> {
-    const changeTabNum = useSelector((state :RootState)=>state.changeTab);
+    const changeTabNum = useSelector((tabIndexSelector));
 
     useEffect(()=>{
       
-    },[useSelector((state :RootState)=>state.changeTab).number])
+    },[useSelector((tabIndexSelector))])
 
     const dispatch = useDispatch();
 
@@ -34,7 +34,7 @@ export const NavTab =()=> {
 
   return (
 
-      <ContentTabBox value={changeTabNum.number} onChange={handleChange}>
+      <ContentTabBox value={changeTabNum} onChange={handleChange}>
         <ContentTab label= "일반 셔플" value={0}/>
         <ContentTab label= "프리미엄 셔플" value={1}/>
         <ContentTab label= "셔플 관련 이벤트" value={2} />

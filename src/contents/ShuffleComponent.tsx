@@ -1,23 +1,20 @@
-import React, { useEffect } from 'react'
+import { Box, Stack } from "@mui/system"
+import styled from "styled-components"
+import { PreCardComponent } from "./PreCardComponent"
+import { SufCardComponent } from "./SufCardComponent"
+import { Button } from "@mui/material"
+import { useDispatch, useSelector } from "react-redux"
+import { optionActions, optionsSelector } from "../states/store/optionSlice"
+import { clickActions, clickCountSelector } from "../states/store/clickCountSlice"
+import { tabIndexSelector } from "../states/store/changeTabSlice"
+import { cardOptionSelector } from "../states/store/cardOptionSlice"
+import { sufChangeActions, sufChangeSelector } from "../states/store/sufOptionSlice"
+import { useEffect } from "react"
+import { gatCha } from "../assets/weightRandom"
+import { ABOptions, ANOptions, APOptions, DBOptions, DNOptions, DPOptions, TBOptions, TNOptions, TPOptions } from "../assets/tempDb"
+import { ComboComponent } from "./ComboComponent"
+import { red } from "@mui/material/colors"
 
-import { Box, Stack, fontFamily } from '@mui/system'
-import { styled } from 'styled-components'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../states/store/store'
-import { PreCardComponent } from './PreCardComponent'
-import { Button } from '@mui/material'
-
-import  {optionActions,optionSelector}  from '../states/store/optionSlice';
-import '../assets/tempDb';
-import { gatCha } from '../assets/weightRandom'
-import { TNOptions,TPOptions,TBOptions, ANOptions, DNOptions, APOptions ,ABOptions , DPOptions , DBOptions } from '../assets/tempDb'
-import { clickActions } from '../states/store/clickCountSlice'
-import {sufChangeActions} from '../states/store/sufOptionSlice'
-import { red } from '@mui/material/colors'
-import { cardOptionActions } from '../states/store/cardOptionSlice'
-import { ComboComponent } from './ComboComponent'
-import { SufCardComponent } from './SufCardComponent'
-import { createSelector } from '@reduxjs/toolkit'
 
 
 
@@ -60,12 +57,12 @@ export const ShuffleComponent = () => {
   // dispatch 가 두번 호출 되는 이유 useSelector는 렌더링을 발생시킴 / createSelector로 바꾸어야함
 
   
-  const OPTION_STATE = useSelector((state :RootState)=>state.changeOption).options; // 옵션 상태
-  const OPTION_STATE2 = optionSelector;
-  console.log(OPTION_STATE2);
-  const CLICK_COUNT = useSelector((state :RootState)=>state.increaseCount).number;  // 사용 횟수
-  const MENU_INDEX = useSelector((state :RootState)=>state.changeTab).number;       // 메뉴 인덱스
-  const CARD_OPTION_VALUE = useSelector((state :RootState)=>state.changeOptionValue).optionValue; // 공/수/재 구분
+  // const OPTION_STATE = useSelector((state :RootState)=>state.changeOption).options; // 옵션 상태
+  const OPTION_STATE = useSelector(optionsSelector); // createSelector 사용해서 변경
+  const CLICK_COUNT = useSelector(clickCountSelector);  // 사용 횟수
+  const MENU_INDEX = useSelector(tabIndexSelector);       // 메뉴 인덱스
+  const CARD_OPTION_VALUE = useSelector(cardOptionSelector); // 공/수/재 구분
+  const SUF_OPTION = useSelector(sufChangeSelector);
   const dispatch = useDispatch();
   let SHUFFLE_PRICE = 0;
   let SHUFFLE_NAME = "";
@@ -105,9 +102,8 @@ export const ShuffleComponent = () => {
     dispatch(sufChangeActions.sufChangeOption(PRE_OPTION_STATE))
     dispatch(clickActions.increaseCount());
 
-
-      
   }
+
   const temp =(...args: any[])=>{
     console.log(args);
     for(let i = 0 ; i < args.length ; i++){

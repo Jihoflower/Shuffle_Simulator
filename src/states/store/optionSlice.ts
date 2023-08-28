@@ -29,12 +29,14 @@ export const changeSlice = createSlice({
         // 타입을 지정해주는데 객체 타입으로 타입을 지정해줌
         changeOption : (state , action: PayloadAction<{opt : string , flag : boolean}[]>) =>{
             console.log("changeOption");
+            
             state.options[0].opt = action.payload[0].opt;
             state.options[1].opt = action.payload[1].opt;
             state.options[2].opt = action.payload[2].opt;
             state.options[0].flag = action.payload[0].flag;
             state.options[1].flag = action.payload[1].flag;
             state.options[2].flag = action.payload[2].flag;
+            console.log("아 시발;;")
         },
 
         changeOptionLock : (state , action: PayloadAction<string>) =>{
@@ -59,13 +61,15 @@ export const changeSlice = createSlice({
 
 })
 let count = 0;
-export const optionState = (state :RootState)=>{
-    return state.changeOption.options; // 옵션 상태
-}
 
-export const optionSelector = createSelector(
-    optionState,
-    ()=>{count++; console.log(count); return optionState}
+// 애로우 펑션에서 중괄호를 사용할꺼면 return을 해줘야함
+
+
+const _options = (state:RootState)=>state.changeOption.options || initialState.options;
+
+export const optionsSelector = createSelector(
+    [_options],
+    (options)=>{console.log("셀렉터 통과"); return options}
 )
 
 

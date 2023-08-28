@@ -1,13 +1,13 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSelector, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import { RootState } from './store';
 
-export interface ChangeState{
+export interface ChangeTabState{
     number : number
 }
 
 // 이니셜라이징 할때 기본값
-const initialState :ChangeState = {number : 0};
+const initialState :ChangeTabState = {number : 0};
 
 export const changeSlice = createSlice({
     name : "change", //createSlice의 이름
@@ -23,6 +23,12 @@ export const changeSlice = createSlice({
 
 })
 
+const _tabIndex = (state:RootState)=>state.changeTab.number || initialState.number;
+
+export const tabIndexSelector = createSelector(
+    [_tabIndex],
+    (number)=>{return number}
+)
 
 export const changeTabActions = changeSlice.actions ; // 리듀서를 export
 export default changeSlice.reducer;

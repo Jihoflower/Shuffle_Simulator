@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSelector, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import { RootState } from './store';
 
@@ -42,6 +42,12 @@ export const changeSlice = createSlice({
 
 })
 
+const _sufOptions = (state:RootState)=>state.sufChangeOption.options || initialState.options; 
+
+export const sufChangeSelector = createSelector(
+    [_sufOptions],
+    (options)=>{return options}
+)
 
 export const sufChangeActions = changeSlice.actions ; // 리듀서를 export
 export default changeSlice.reducer;

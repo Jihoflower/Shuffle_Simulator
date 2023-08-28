@@ -1,8 +1,8 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSelector, createSlice} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import { RootState } from './store';
 
-export interface optionState{
+export interface CardOptionState{
     optionValue : string
     
 }
@@ -10,7 +10,7 @@ export interface optionState{
 
 
 // 이니셜라이징 할때 기본값
-const initialState :optionState = {
+const initialState :CardOptionState = {
     optionValue : "A"
 };
 
@@ -32,6 +32,13 @@ export const changeSlice = createSlice({
     
 
 })
+
+const _options = (state:RootState)=>state.changeOptionValue.optionValue || initialState.optionValue;
+
+export const cardOptionSelector = createSelector(
+    [_options],
+    (optionValue)=>{console.log("셀렉터 통과"); return optionValue}
+)
 
 
 export const  cardOptionActions = changeSlice.actions ; // 리듀서를 export
